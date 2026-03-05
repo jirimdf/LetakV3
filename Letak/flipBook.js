@@ -5,7 +5,6 @@ class FlipBook {
     this.path = path;
     
     // --- INICIALIZACE ZVUKŮ ---
-    // Načtení zvuků pro realistický efekt listování a nastavení jejich hlasitosti
     this.flipSounds = [
       new Audio('Sounds/1.mp3'),
       new Audio('Sounds/2.mp3'),
@@ -16,7 +15,6 @@ class FlipBook {
     this.soundEnabled = true;
 
     // --- LOGIKA MENU A TLAČÍTEK ---
-    // Propojení prvků uživatelského rozhraní (GUI)
     const settingsBtn = document.getElementById('settingsBtn');
     const settingsMenu = document.getElementById('settingsMenu');
     const toggleShadowBtn = document.getElementById('toggleShadowBtn');
@@ -70,8 +68,17 @@ class FlipBook {
       });
     }
 
-    // --- LOGIKA POSUVNÍKŮ A BAREV (Změna CSS proměnných v reálném čase) ---
+    // --- LOGIKA POSUVNÍKŮ A BAREV ---
     const root = document.documentElement;
+
+    // --- TVRDÝ ZÁMEK RESPONZIVITY ---
+    const updateScale = () => {
+      const scale = Math.min(1, (window.innerWidth * 0.95) / 800, (window.innerHeight * 0.85) / 600);
+      root.style.setProperty('--responsive-scale', scale);
+    };
+    window.addEventListener('resize', updateScale);
+    updateScale();
+
     const zoomSlider = document.getElementById('zoomSlider');
     const zoomValue = document.getElementById('zoomValue');
     const shadowSizeSlider = document.getElementById('shadowSizeSlider');
@@ -110,7 +117,7 @@ class FlipBook {
     const updateShadowColorAndStrength = () => {
       const hexColor = shadowColorPicker ? shadowColorPicker.value : '#000000';
       const strength = shadowStrengthSlider ? parseFloat(shadowStrengthSlider.value) : 0.5;
-      
+
       // Převod desetinné síly na HEX formát pro průhlednost (např. 0.5 -> 80)
       const alphaHex = Math.round(strength * 255).toString(16).padStart(2, '0');
       root.style.setProperty('--shadow-color', hexColor + alphaHex);
@@ -145,7 +152,7 @@ class FlipBook {
     await this.buildPages();
   }
 
-  // --- JÁDRO APLIKACE: NAČTENÍ A ZPRACOVÁNÍ STRÁNEK ---
+  // --- JÁDRO APLIKACE ---
   async buildPages() {
     // 1. Získání obsahu složky přes HTTP request
     const response = await fetch(this.path);
@@ -210,11 +217,11 @@ class FlipBook {
 
     this.book.innerHTML = '';
 
-    // 6. Vložení obrázků a stínů do DOMu
+    // 6. Vložení obrázků a stínů
     finalPages.forEach((src, index) => {
       const div = document.createElement('div');
       div.className = 'page';
-      
+
       // Střídání vnitřních stínů pro realistický hřbet knihy
       const shadowClass = (index % 2 === 0) ? 'shadow-right' : 'shadow-left';
 
@@ -248,16 +255,13 @@ class FlipBook {
     this.pageFlip = new St.PageFlip(this.book, {
       width: 400,
       height: 600,
-      size: "stretch",
-      minWidth: 40,   // Nastavení pro extrémní zmenšení (Apple Watch)
-      minHeight: 60,  
-      maxWidth: 400,
-      maxHeight: 600,
+      size: "fixed", 
       showCover: true,
       usePortrait: false,
       maxShadowOpacity: 0.7, 
       drawShadow: true,
-      flippingTime: 1000
+      flippingTime: 1000,
+      autoCenter: false
     });
 
     this.pageFlip.loadFromHTML(this.book.querySelectorAll('.page'));
@@ -265,8 +269,6 @@ class FlipBook {
     // Plynulé zobrazení letáku a skrytí načítacího kolečka po inicializaci
     setTimeout(() => {
       this.book.style.opacity = '1';
-      this.book.style.transition = 'opacity 0.8s ease, transform 0.6s ease';
-
       const loader = document.getElementById('loader');
       if (loader) {
         loader.style.opacity = '0';
@@ -306,5 +308,21 @@ class FlipBook {
         this.pageFlip.flipPrev(); 
       }
     });
+
+    // --- OVLÁDÁNÍ ŠIPKAMI NA OBRAZOVCE ---
+    const prevBtn = document.getElementById('prevPageBtn');
+    const nextBtn = document.getElementById('nextPageBtn');
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        this.pageFlip.flipPrev();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        this.pageFlip.flipNext();
+      });
+    }
   }
 }

@@ -9,6 +9,9 @@
 <body>
   <div id="loader" class="loader"></div>
 
+  <button id="prevPageBtn" class="nav-arrow left-arrow">&#10094;</button>
+  <button id="nextPageBtn" class="nav-arrow right-arrow">&#10095;</button>
+
   <div class="settings-container">
     <button id="settingsBtn" class="settings-btn">⚙️</button>
     <div id="settingsMenu" class="settings-menu hidden">
@@ -51,7 +54,9 @@
   </div>
 
   <div id="zoomWrapper" class="zoom-wrapper">
-    <div class="flipBook with-shadow" id="flipBook"></div>
+    <div class="book-bounding-box">
+      <div class="flipBook with-shadow" id="flipBook"></div>
+    </div>
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>

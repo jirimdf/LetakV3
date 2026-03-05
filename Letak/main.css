@@ -1,28 +1,25 @@
 /* --- GLOBÁLNÍ PROMĚNNÉ --- */
-/* Tyto hodnoty dynamicky mění JavaScript podle uživatelského nastavení */
 :root {
   --zoom: 1;
+  --responsive-scale: 1; 
   --shadow-size: 40px;
-  --shadow-offset: 0px; /* Vycentrování záře na střed */
+  --shadow-offset: 0px; 
   --shadow-color: rgba(0, 0, 0, 0.5); 
 }
 
 /* --- ZÁKLADNÍ ROZLOŽENÍ STRÁNKY --- */
-/* Zajišťuje vycentrování a plynulý přechod pozadí při zapnutí Dark Mode */
 body {
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  width: 100vw; 
+  height: 100vh; 
+  position: relative; 
   background-color: #f0f0f0;
   overflow: hidden; 
   transition: background-color 0.5s ease;
 }
 
 /* --- TMAVÝ REŽIM (DARK MODE) --- */
-/* Ztmaví pozadí a upraví barvy ovládacího panelu */
 body.dark-mode {
   background-color: #000000;
 }
@@ -41,42 +38,40 @@ body.dark-mode .menu-divider {
   background: #444; 
 }
 
-/* --- FUNKCE PŘIBLÍŽENÍ (ZOOM) --- */
-/* Obal knihy zajišťující plynulé zvětšování ze středu obrazovky */
+/* --- FUNKCE PŘIBLÍŽENÍ (ZOOM) A RESPONZIVITY --- */
 .zoom-wrapper {
-  transform: scale(var(--zoom));
-  transition: transform 0.3s ease;
-  transform-origin: center center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(calc(var(--zoom) * var(--responsive-scale)));
+  width: 800px;
+  height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
+}
+
+/* --- TVRDÝ ZÁMEK OBALU --- */
+.book-bounding-box {
+  width: 800px;
+  height: 600px; 
+  position: relative;
 }
 
 /* --- HLAVNÍ KONTEJNER LETÁKU --- */
-/* Responzivní rámeček s hardwarovou akcelerací (GPU) pro plynulý běh */
 .flipBook {
-  width: 95vw; 
-  max-width: 800px; 
-  height: auto;
-  max-height: 85vh; 
-  aspect-ratio: 8 / 6; 
+  width: 100%;
+  height: 100%;
   opacity: 0; 
-  transition: opacity 0.8s ease; 
-  transform: translateZ(0);
-  will-change: transform;
+  transition: opacity 0.8s ease, transform 0.6s ease; 
+  transform: translateX(-25%); 
 }
 
 /* --- JEDNOTLIVÉ STRÁNKY --- */
-/* GPU optimalizace stránek pro hladké otáčení bez trhání */
 .page {
   background-color: #fff;
   position: relative;
   overflow: hidden;
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
 }
 
 /* --- 3D EFEKT ROZEVŘENÉ KNIHY --- */
@@ -114,23 +109,22 @@ body.dark-mode .menu-divider {
   animation: spin 1s linear infinite;
   transition: opacity 0.5s ease;
   z-index: 100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* --- VNĚJŠÍ ZÁŘE (GLOW EFEKT) --- */
-/* Vyhlazený stín obepínající leták. Přepočítává se přes GPU (will-change) */
 .with-shadow {
   filter: drop-shadow(0 var(--shadow-offset) var(--shadow-size) var(--shadow-color));
-  transition: filter 0.2s ease, opacity 0.8s ease, transform 0.6s ease !important;
-  will-change: filter;
 }
 
-/* --- UŽIVATELSKÉ ROZHRANÍ (GUI) - ZÁKLAD --- */
-/* Plovoucí kontejner pro celé nastavení v pravém dolním rohu */
+/* --- UŽIVATELSKÉ ROZHRANÍ (GUI) --- */
 .settings-container {
   position: fixed;
   bottom: 20px;
@@ -288,4 +282,47 @@ body.dark-mode .menu-divider {
   border: 2px solid #ecf0f1;
   border-radius: 8px;
   box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+}
+
+/* --- NAVIGAČNÍ ŠIPKY PRO OBŘÍ ZOOM --- */
+.nav-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.3); 
+  color: rgba(255, 255, 255, 0.7);
+  border: none;
+  width: 50px;
+  height: 80px;
+  font-size: 35px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+body.dark-mode .nav-arrow {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-arrow:hover {
+  background: rgba(231, 76, 60, 0.9);
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.nav-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.left-arrow {
+  left: 15px;
+}
+
+.right-arrow {
+  right: 15px;
 }
