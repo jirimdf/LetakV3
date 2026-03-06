@@ -1,4 +1,4 @@
-[![Ukázka projektu](https://kappa.lol/fJg3lO)](https://youtu.be/YxxB9A8hF8I)
+[![Ukázka projektu](LetakV3/Letak/TEST%20FILE/miniatura.png)](https://youtu.be/YxxB9A8hF8I)
 ---
 
 **Kontakt a sítě:**
