@@ -20,6 +20,7 @@ class FlipBook {
     const toggleShadowBtn = document.getElementById('toggleShadowBtn');
     const toggleSoundBtn = document.getElementById('toggleSoundBtn');
     const toggleDarkModeBtn = document.getElementById('toggleDarkModeBtn');
+    const toggleProgressBtn = document.getElementById('toggleProgressBtn'); // Nové tlačítko pro Progres
 
     // Tlačítko: TMAVÝ REŽIM (Dark Mode)
     if (toggleDarkModeBtn) {
@@ -65,6 +66,16 @@ class FlipBook {
         this.soundEnabled = !this.soundEnabled;
         toggleSoundBtn.innerText = this.soundEnabled ? 'ZAPNUTO' : 'VYPNUTO';
         toggleSoundBtn.classList.replace(this.soundEnabled ? 'off' : 'on', this.soundEnabled ? 'on' : 'off');
+      });
+    }
+
+    // --- NOVÉ: TLAČÍTKO PRO PROGRESS BAR ---
+    const progressContainer = document.getElementById('progressBarContainer');
+    if (toggleProgressBtn && progressContainer) {
+      toggleProgressBtn.addEventListener('click', () => {
+        const isHidden = progressContainer.classList.toggle('hidden');
+        toggleProgressBtn.innerText = isHidden ? 'VYPNUTO' : 'ZAPNUTO';
+        toggleProgressBtn.classList.replace(isHidden ? 'on' : 'off', isHidden ? 'off' : 'on');
       });
     }
 
@@ -278,7 +289,7 @@ class FlipBook {
       currentState = e.data; 
     });
 
-    // --- MANUÁLNÍ A DOKONALÉ CENTROVÁNÍ OBÁLEK ---
+    // --- MANUÁLNÍ A DOKONALÉ CENTROVÁNÍ OBÁLEK A PROGRESS BAR ---
     this.pageFlip.on('flip', (e) => {
       const pageCount = this.pageFlip.getPageCount();
       
@@ -288,6 +299,14 @@ class FlipBook {
         this.book.style.transform = 'translateX(25%)'; 
       } else {
         this.book.style.transform = 'translateX(0)'; 
+      }
+
+      // --- AKTUALIZACE PROGRESS BARU ---
+      // Vypočítáme procenta podle aktuální stránky a počtu stran
+      const progressBar = document.getElementById('progressBar');
+      if (progressBar && pageCount > 1) {
+        const progressPercentage = (e.data / (pageCount - 1)) * 100;
+        progressBar.style.width = `${progressPercentage}%`;
       }
     });
 

@@ -327,3 +327,37 @@ body.dark-mode .nav-arrow {
 .right-arrow {
   right: 15px;
 }
+
+/* --- PROGRESS BAR (NEONOVÁ ZÁŘE) --- */
+.progress-container {
+  position: fixed;
+  bottom: 35px; /* Výškově ladí s nastavením vpravo */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%; /* Zabírá polovinu obrazovky ve středu */
+  max-width: 600px;
+  min-width: 200px;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+body.dark-mode .progress-container {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.progress-container.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%; /* Na začátku knihy je na nule */
+  background: #e74c3c;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #e74c3c, 0 0 20px #e74c3c; /* NEONOVÝ EFEKT */
+  transition: width 0.4s ease; /* Plynulé posunutí při otočení stránky */
+}
