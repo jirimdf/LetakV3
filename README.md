@@ -50,3 +50,4 @@ Pro správné fungování lokálního serveru na Windows (IIS) je nutné provés
 * **Navigační šipky:** Přidány plovoucí šipky ukotvené po stranách obrazovky pro větší pohodlí.
 * **Glass-effect UX (Light/Dark Mode):** Šipky dostaly vylepšený "neviditelný" design s bílou průhledností. V Light modu mají tmavé znaky, v Dark modu světlé, takže na obou režimech fungují jako čisté sklo a neruší čtení textu pod nimi.
 * **Dokonalé centrování obálek:** Vypnuto problémové interní auto-centrování knihovny a implementována vlastní přesná logika posunu (`translateX`), která přední obálku i zadní stranu plynule a bezchybně ukotví vždy na absolutní střed obrazovky.
+* **Neonový ukazatel průběhu (Progress Bar):** Přidána vizuální lišta ve spodní části obrazovky, která se plynule naplňuje při listování a ukazuje aktuální postup čtení letáku. Ukazatel má červený neonový design ladící s celkovým UI a lze jej kdykoliv skrýt pomocí nového tlačítka "Progres" v ovládacím panelu.
