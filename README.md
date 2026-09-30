@@ -1,4 +1,4 @@
-[![YouTube Badge](https://img.shields.io/badge/YouTube-Video%20Ukázka-red?style=for-the-badge&logo=youtube)](https://youtu.be/3vfYQWvBdy8)
+[![Live demo](https://img.shields.io/badge/%C5%BDiv%C3%A9-demo-blue?style=for-the-badge&logo=github)](https://jirimdf.github.io/LetakV3/) [![YouTube Badge](https://img.shields.io/badge/YouTube-Video%20Ukázka-red?style=for-the-badge&logo=youtube)](https://youtu.be/3vfYQWvBdy8)
 [![Ukázka projektu](https://github.com/jirimdf/LetakV3/blob/main/Letak/TEST%20FILE/miniatura.png?raw=true)](https://youtu.be/3vfYQWvBdy8)
 ---
 
