@@ -17,6 +17,11 @@ Pro správné fungování lokálního serveru na Windows (IIS) je nutné provés
 
 ---
 
+## 📁 Dokumentace
+
+- [Ukázkové video](docs/ukazka.mp4)
+- [Maturitní práce (docx)](docs/milisdorfer_maturitni_prace_elektronicky_letak_program.docx)
+
 ## 📜 Changelog
 
 ### 🔹 v1.0 - Beta verze
